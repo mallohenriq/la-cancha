@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>La Cancha</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0e0e0e;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    #estadio {
+      width: 300px;
+      height: 200px;
+      margin: 20px auto;
+      overflow: hidden;
+      background: #000;
+    }
+ 
+  #imagem {
+  width: 100%;
+  height: 100%;
+  background-image: url("./images/maracana_sat.jpg");
+  background-size: cover;
+  background-position: center;
+  clip-path: inset(0 0 80% 0);
+  transition: clip-path 0.4s ease;
+  filter: brightness(0.7) contrast (0.85) saturate (0.7);
+  }
+ 
+    input {
+      padding: 6px 10px;
+      width: 140px;
+      font-size: 14px;
+    }
+
+    button {
+      padding: 6px 10px;
+      font-size: 14px;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+
+    #dica {
+      margin-top: 15px;
+      font-style: Arial;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>La Cancha</h1>
+  <p>Você consegue advinhnar o estádio?</p>
+
+  <div id="estadio">
+    <div id="imagem"></div>
+  </div>
+
+  <input id="resposta" placeholder="Digite o nome do estádio">
+  <button onclick="verificar()">confirmar</button>
+
+  <div id="dicas"></div>
+
+  <script>
+  let tentativa = 1;
+  const respostaCorreta = "maracana";
+
+  const dicas = [
+    "Foi inaugurado antes do fim de sua construção",
+    "O maior público registrado no estádio é de 183.341 pessoas",
+    "Seu nome homenageia um grande cronista esportivo",
+    "O maior artilheiro da história desse estádio marcou 334 gols",
+    "Receberá sua terceira final de Copa do Mundo em 2027"
+  ];
+
+   const dicasDiv = document.getElementById("dicas");
+     const primeiraDica = document.createElement("p");
+     primeiraDica.innerText = `Dica 1: ${dicas[0]}`;
+     dicasDiv.appendChild(primeiraDica);
+
+  const imagem = document.getElementById("imagem");
+  const dicaTexto = document.getElementById("dica");
+  const input = document.getElementById("resposta");
+
+  function verificar() {
+    const respostaUsuario = input.value
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .trim();
+
+    if (respostaUsuario === respostaCorreta) {
+      imagem.style.clipPath = "inset(0 0 0 0)";
+      alert("Você acertou — Maracanã!");
+      bloquearJogo();
+      return;
+    }
+
+    tentativa++;
+
+    if (tentativa > 5) {
+      imagem.style.clipPath = "inset(0 0 0 0)";
+      alert("Fim de jogo! Era Maracanã.");
+      bloquearJogo();
+      return;
+    }
+
+   const novaDica = document.createElement("p");
+     novaDica.innerText = `Dica ${tentativa}: ${dicas[tentativa - 1]}`;
+     dicasDiv.appendChild(novaDica);
+  
+    const porcentagemEscondida = 100 - (tentativa * 15);
+    imagem.style.clipPath = `inset(0 0 ${porcentagemEscondida}% 0)`;
+    dicaTexto.innerText = `Dica ${tentativa}: ${dicas[tentativa - 1]}`;
+    input.value = "";
+  }
+
+  function bloquearJogo() {
+    input.disabled = true;
+  }
+  </script>
+
+</body>
+</html>
