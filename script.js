@@ -40,6 +40,27 @@ const estadioAtual = estadios[ordemEstadios[indiceOrdem]];
 const chaveDoDia = `lacanchagame_${indiceOrdem}`;
 
 // =======================
+// TRAVA DA MEIA-NOITE
+// =======================
+const jaJogouHoje = localStorage.getItem(chaveDoDia);
+
+// pega hora de Brasília
+const agoraBr = new Date(
+  new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
+);
+const meiaNoite = new Date(agoraBr);
+meiaNoite.setHours(0, 0, 0, 0);
+
+if (agoraBr < meiaNoite || jaJogouHoje) {
+  bloquearJogo();
+  mostrarBloqueio();
+} else {
+  const primeiraDica = document.createElement("p");
+  primeiraDica.innerText = `Dica 1: ${estadioAtual.dicas[0]}`;
+  document.getElementById("dicas").appendChild(primeiraDica);
+}
+
+// =======================
 // VARIÁVEIS DO JOGO
 // =======================
 let tentativa = 1;
