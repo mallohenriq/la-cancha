@@ -1,44 +1,28 @@
 // =======================
-// ORDEM ALEATÓRIA FIXA
+// ORDEM ALEATÓRIA FIXA PARA TODOS
 // =======================
-function embaralhar(array) {
-  const copia = [...array];
-  for (let i = copia.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copia[i], copia[j]] = [copia[j], copia[i]];
-  }
-  return copia;
-}
-
-// salva a ordem uma única vez para todos os usuários
-let ordemEstadios = JSON.parse(localStorage.getItem("ordem_estadios"));
-if (!ordemEstadios) {
-  ordemEstadios = embaralhar(estadios.map((_, i) => i));
-  localStorage.setItem("ordem_estadios", JSON.stringify(ordemEstadios));
-}
+const ordemEstadios = [
+  10, 3, 5, 1, 7, 2, 4, 6, 8, 9, 0, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 30, 33, 34, 32, 31
+]; // coloque aqui todos os índices dos seus estádios na ordem que quiser
 
 // =======================
 // ESTÁDIO DO DIA
 // =======================
-const dataInicial = new Date("2026-03-01T00:00:00-03:00");
-const agora = new Date();
+function pegarDataBrasil() {
+  const agora = new Date();
+  // Ajusta para GMT-3 (horário de Brasília)
+  const offset = -3 * 60; // minutos
+  const utc = agora.getTime() + agora.getTimezoneOffset() * 60000;
+  return new Date(utc + offset * 60000);
+}
 
-// força horário de Brasília
-const utcOffset = -3; // GMT-3
-const hoje = new Date(
-  agora.getUTCFullYear(),
-  agora.getUTCMonth(),
-  agora.getUTCDate(),
-  agora.getUTCHours() + utcOffset,
-  agora.getUTCMinutes(),
-  agora.getUTCSeconds()
-);
+const dataInicial = new Date("2026-03-01T00:00:00-03:00");
+const hoje = pegarDataBrasil();
 
 const msPorDia = 1000 * 60 * 60 * 24;
 let diasPassados = Math.floor((hoje - dataInicial) / msPorDia);
 if (diasPassados < 0) diasPassados = 0;
 
-// índice fixo para o estádio do dia
 const indiceOrdem = diasPassados % ordemEstadios.length;
 const estadioAtual = estadios[ordemEstadios[indiceOrdem]];
 
@@ -160,7 +144,7 @@ function mostrarResultado(acertou) {
   const mensagem = document.getElementById("mensagemFinal");
   const estatistica = document.getElementById("estatistica");
 
-  const link = "https://lacanchagame.com.br/";
+  const link = "https://lacanchagame.com.br";
   let textoShare = "";
 
   if (acertou) {
@@ -188,15 +172,15 @@ function mostrarResultado(acertou) {
 }
 
 // =======================
-// CONTADOR PARA 00:00
+// CONTADOR / TRAVA MEIA-NOITE
 // =======================
 function iniciarContador() {
   function atualizar() {
-    const agora = new Date();
-    const proximoDia = new Date(agora);
-    proximoDia.setHours(24, 0, 0, 0);
+    const agora = pegarDataBrasil();
+    const amanha = new Date(agora);
+    amanha.setHours(24, 0, 0, 0);
 
-    const diff = proximoDia - agora;
+    const diff = amanha - agora;
     if (diff <= 0) return;
 
     const h = Math.floor(diff / (1000 * 60 * 60));
