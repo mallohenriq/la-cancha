@@ -1,23 +1,34 @@
 // =======================
-// ORDEM ALEATÓRIA FIXA PARA TODOS
+// ORDEM ALEATÓRIA FIXA
 // =======================
-const ordemEstadios = [
-  10, 3, 5, 1, 7, 2, 4, 6, 8, 9, 0, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 30, 33, 34, 32, 31
-]; // coloque aqui todos os índices dos seus estádios na ordem que quiser
+function embaralhar(array) {
+  const copia = [...array];
+  for (let i = copia.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copia[i], copia[j]] = [copia[j], copia[i]];
+  }
+  return copia;
+}
+
+// força o mesmo fuso horário do Brasil
+function dataBrasil() {
+  const agora = new Date();
+  const utc = agora.getTime() + agora.getTimezoneOffset() * 60000;
+  return new Date(utc - 3 * 60 * 60 * 1000);
+}
+
+// salva a ordem uma única vez
+let ordemEstadios = JSON.parse(localStorage.getItem("ordem_estadios"));
+if (!ordemEstadios) {
+  ordemEstadios = embaralhar(estadios.map((_, i) => i));
+  localStorage.setItem("ordem_estadios", JSON.stringify(ordemEstadios));
+}
 
 // =======================
 // ESTÁDIO DO DIA
 // =======================
-function pegarDataBrasil() {
-  const agora = new Date();
-  // Ajusta para GMT-3 (horário de Brasília)
-  const offset = -3 * 60; // minutos
-  const utc = agora.getTime() + agora.getTimezoneOffset() * 60000;
-  return new Date(utc + offset * 60000);
-}
-
 const dataInicial = new Date("2026-03-01T00:00:00-03:00");
-const hoje = pegarDataBrasil();
+const hoje = dataBrasil();
 
 const msPorDia = 1000 * 60 * 60 * 24;
 let diasPassados = Math.floor((hoje - dataInicial) / msPorDia);
@@ -79,7 +90,6 @@ function verificar() {
 
   input.value = "";
 
-  // ACERTO
   if (respostaUsuario === respostaCorreta) {
     imagem.style.clipPath = "inset(0 0 0 0)";
     mostrarResultado(true);
@@ -89,11 +99,9 @@ function verificar() {
     return;
   }
 
-  // ERRO
   bolas[tentativa - 1].classList.add("erro");
   tentativa++;
 
-  // FIM DE JOGO
   if (tentativa > dicas.length) {
     imagem.style.clipPath = "inset(0 0 0 0)";
     mostrarResultado(false);
@@ -103,12 +111,10 @@ function verificar() {
     return;
   }
 
-  // nova dica
   const novaDica = document.createElement("p");
   novaDica.innerText = `Dica ${tentativa}: ${dicas[tentativa - 1]}`;
   dicasDiv.appendChild(novaDica);
 
-  // revelar imagem
   const porcentagemEscondida = 100 - tentativa * 15;
   imagem.style.clipPath = `inset(0 0 ${porcentagemEscondida}% 0)`;
 }
@@ -163,7 +169,6 @@ function mostrarResultado(acertou) {
 
   document.getElementById("shareTwitter").href =
     `https://twitter.com/intent/tweet?text=${textoCodificado}`;
-
   document.getElementById("shareWhats").href =
     `https://wa.me/?text=${textoCodificado}`;
 
@@ -172,11 +177,11 @@ function mostrarResultado(acertou) {
 }
 
 // =======================
-// CONTADOR / TRAVA MEIA-NOITE
+// CONTADOR
 // =======================
 function iniciarContador() {
   function atualizar() {
-    const agora = pegarDataBrasil();
+    const agora = dataBrasil();
     const amanha = new Date(agora);
     amanha.setHours(24, 0, 0, 0);
 
