@@ -149,7 +149,7 @@ function mostrarResultado(acertou) {
   const mensagem = document.getElementById("mensagemFinal");
   const estatistica = document.getElementById("estatistica");
 
-  const link = "https://lacanchagame.github.io";
+  const link = "https://lacanchagame.com.br";
   let textoShare = "";
 
   if (acertou) {
