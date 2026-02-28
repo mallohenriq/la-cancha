@@ -22,10 +22,15 @@ if (!ordemEstadios) {
 // ESTÁDIO DO DIA
 // =======================
 const dataInicial = new Date("2026-03-01T00:00:00-03:00");
-const hoje = new Date();
+
+// força o horário de Brasília
+const agora = new Date();
+const hojeBr = new Date(
+  agora.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
+);
 
 const msPorDia = 1000 * 60 * 60 * 24;
-let diasPassados = Math.floor((hoje - dataInicial) / msPorDia);
+let diasPassados = Math.floor((hojeBr - dataInicial) / msPorDia);
 if (diasPassados < 0) diasPassados = 0;
 
 const indiceOrdem = diasPassados % ordemEstadios.length;
