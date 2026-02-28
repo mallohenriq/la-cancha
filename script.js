@@ -10,7 +10,7 @@ function embaralhar(array) {
   return copia;
 }
 
-// salva a ordem uma única vez
+// salva a ordem uma única vez para todos os usuários
 let ordemEstadios = JSON.parse(localStorage.getItem("ordem_estadios"));
 if (!ordemEstadios) {
   ordemEstadios = embaralhar(estadios.map((_, i) => i));
@@ -21,24 +21,24 @@ if (!ordemEstadios) {
 // ESTÁDIO DO DIA
 // =======================
 const dataInicial = new Date("2026-03-01T00:00:00-03:00");
-const hoje = new Date();
+const agora = new Date();
 
-// =======================
-// TRAVA PARA 00:00
-// =======================
-const ultimaData = localStorage.getItem('ultima_jogada');
-const dataHoje = hoje.toISOString().slice(0,10); // YYYY-MM-DD
-if (ultimaData === dataHoje) {
-  bloquearJogo();
-  mostrarBloqueio();
-} else {
-  localStorage.setItem('ultima_jogada', dataHoje);
-}
+// força horário de Brasília
+const utcOffset = -3; // GMT-3
+const hoje = new Date(
+  agora.getUTCFullYear(),
+  agora.getUTCMonth(),
+  agora.getUTCDate(),
+  agora.getUTCHours() + utcOffset,
+  agora.getUTCMinutes(),
+  agora.getUTCSeconds()
+);
 
 const msPorDia = 1000 * 60 * 60 * 24;
 let diasPassados = Math.floor((hoje - dataInicial) / msPorDia);
 if (diasPassados < 0) diasPassados = 0;
 
+// índice fixo para o estádio do dia
 const indiceOrdem = diasPassados % ordemEstadios.length;
 const estadioAtual = estadios[ordemEstadios[indiceOrdem]];
 
@@ -160,7 +160,7 @@ function mostrarResultado(acertou) {
   const mensagem = document.getElementById("mensagemFinal");
   const estatistica = document.getElementById("estatistica");
 
-  const link = "https://lacanchagame.com.br";
+  const link = "https://lacanchagame.com.br/";
   let textoShare = "";
 
   if (acertou) {
@@ -188,15 +188,15 @@ function mostrarResultado(acertou) {
 }
 
 // =======================
-// CONTADOR
+// CONTADOR PARA 00:00
 // =======================
 function iniciarContador() {
   function atualizar() {
     const agora = new Date();
-    const amanha = new Date();
-    amanha.setHours(24, 0, 0, 0);
+    const proximoDia = new Date(agora);
+    proximoDia.setHours(24, 0, 0, 0);
 
-    const diff = amanha - agora;
+    const diff = proximoDia - agora;
     if (diff <= 0) return;
 
     const h = Math.floor(diff / (1000 * 60 * 60));
