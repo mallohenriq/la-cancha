@@ -345,7 +345,7 @@ const estadios = [
     imagem: "images/independencia_sat.jpg",
     dicas: ["Foi palco de uma das maiores zebras do futebol mundial, quando a seleção amadora dos Estados Unidos bateu a Inglaterra por 1 a 0.",
     "O estádio pertencia ao governo, mas passou a ser do Sete de setembro, que depois foi anexado a outro clube da mesma cidade.",
-    "Em 2013, foi peça fundamental para a conquista da primeira Libertadores de um cluve brasileiro.",
+    "Em 2013, foi peça fundamental para a conquista da primeira Libertadores de um clube brasileiro.",
     "Na sua reforma, em 2012, foi criticado pela imprensa e torcedores pela quantidade de pontos cegos nas arquibancadas.",
     "Seu nome oficial homenageia um ex-presidente do Sete de Setembro, que ajudou a viabilizar e ampliar o estádio na época em que o clube era mandatário."]
   }
