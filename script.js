@@ -12,7 +12,6 @@ function embaralhar(array) {
 
 // salva a ordem uma única vez
 let ordemEstadios = JSON.parse(localStorage.getItem("ordem_estadios"));
-
 if (!ordemEstadios) {
   ordemEstadios = embaralhar(estadios.map((_, i) => i));
   localStorage.setItem("ordem_estadios", JSON.stringify(ordemEstadios));
@@ -22,15 +21,22 @@ if (!ordemEstadios) {
 // ESTÁDIO DO DIA
 // =======================
 const dataInicial = new Date("2026-03-01T00:00:00-03:00");
+const hoje = new Date();
 
-// força o horário de Brasília
-const agora = new Date();
-const hojeBr = new Date(
-  agora.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
-);
+// =======================
+// TRAVA PARA 00:00
+// =======================
+const ultimaData = localStorage.getItem('ultima_jogada');
+const dataHoje = hoje.toISOString().slice(0,10); // YYYY-MM-DD
+if (ultimaData === dataHoje) {
+  bloquearJogo();
+  mostrarBloqueio();
+} else {
+  localStorage.setItem('ultima_jogada', dataHoje);
+}
 
 const msPorDia = 1000 * 60 * 60 * 24;
-let diasPassados = Math.floor((hojeBr - dataInicial) / msPorDia);
+let diasPassados = Math.floor((hoje - dataInicial) / msPorDia);
 if (diasPassados < 0) diasPassados = 0;
 
 const indiceOrdem = diasPassados % ordemEstadios.length;
@@ -38,27 +44,6 @@ const estadioAtual = estadios[ordemEstadios[indiceOrdem]];
 
 // chave única do dia
 const chaveDoDia = `lacanchagame_${indiceOrdem}`;
-
-// =======================
-// TRAVA DA MEIA-NOITE
-// =======================
-const jaJogouHoje = localStorage.getItem(chaveDoDia);
-
-// pega hora de Brasília
-const agoraBr = new Date(
-  new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
-);
-const meiaNoite = new Date(agoraBr);
-meiaNoite.setHours(0, 0, 0, 0);
-
-if (agoraBr < meiaNoite || jaJogouHoje) {
-  bloquearJogo();
-  mostrarBloqueio();
-} else {
-  const primeiraDica = document.createElement("p");
-  primeiraDica.innerText = `Dica 1: ${estadioAtual.dicas[0]}`;
-  document.getElementById("dicas").appendChild(primeiraDica);
-}
 
 // =======================
 // VARIÁVEIS DO JOGO
