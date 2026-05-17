@@ -1,7 +1,7 @@
 const estadios = [
   {
     nome: "maracana",
-    nomeCompleto: "Estádio Jornalista Mário Filho",
+    nomeCompleto: "Estádio Jornalista Mário Filho (Maracanã)",
     imagem: "images/maracana_sat.jpg",
     dicas: ["Foi inaugurado antes do fim de sua construção",
   "O maior público registrado no estádio é de 183.341 pessoas",
@@ -124,7 +124,7 @@ const estadios = [
     nomeCompleto: "Estádio Manoel Barradas (Barradão)",
     imagem: "images/barradao_sat.jpg",
     dicas: ["Este estádio foi construído em um antigo aterro sanitário.",
-    "Seu nome homenageia um antigo presidente do clube mandante, que foi responsável pela compra do terreno e doou recursos do própio bolso para a construção",
+    "Seu nome homenageia um antigo presidente do clube mandante, que foi responsável pela compra do terreno e doou recursos do próprio bolso para a construção",
     "Este estádio foi inaugurado duas vezes: a primeira no ano de 1986, e a segunda no ano de 1991.",
     "A chegada do estádio mudou a vida da população que morava no bairro onde ele está localizado, sendo um divisor de águas na renda dos moradores.",
     "Seu maior público já registrado é de 51.000 pessoas."]
@@ -147,7 +147,7 @@ const estadios = [
     "Torcedores e sócios do clube se uniram para reformar este estádio.",
     "Há uma estátua do mascote do clube em uma das arquibancadas deste estádio.",
     "Sua inauguração aconteceu em 15 de agosto de 1917.",
-    "Este é o estádio de propiedade privada mais antigo do norte do país."]
+    "Este é o estádio de propriedade privada mais antigo do norte do país."]
   },
   {
     nome: "arena conda",
@@ -157,7 +157,7 @@ const estadios = [
     "Em 1976, o primeiro gol deste estádio foi marcado pela equipe visitante. Em 2009, após reformas, o primeiro gol foi marcado pelos donos da casa.",
     "Apesar da identificação, este estádio é de propiedade da prefeitura da cidade.",
     "Além de uma estátua ao homenageado do estádio, os arredores concentram um memorial as vítimas do grave acidente aéreo sofrido pelo clube em 2016.",
-    "Foi palco de um dos momentos mais históricos do futebol catarinense: a defesa de Danilo no último minuto de jogo na semifinak da Sul Americana de 2016."]
+    "Foi palco de um dos momentos mais históricos do futebol catarinense: a defesa de Danilo no último minuto de jogo na semifinal da Sul Americana de 2016."]
   },
   {
     nome: "beira rio",
@@ -253,7 +253,7 @@ const estadios = [
     nome: "curuzu",
     nomeCompleto: "Estádio da Curuzu",
     imagem: "images/curuzu_sat.jpg",
-    dicas: ["Apesar do estádio ser de 1914, seu propietário só o adquiriu em julho de 1918, com sua inauguração sendo feita no dia 27 daquele mesmo mês.",
+    dicas: ["Apesar do estádio ser de 1914, seu proprietário só o adquiriu em julho de 1918, com sua inauguração sendo feita no dia 27 daquele mesmo mês.",
     "No dia 01 de novembro de 1950, foi inaugurado o sistema de iluminação do estádio. No clássico disputado neste dia, a equipe da casa venceu seu rival por 3 a 1.",
     "Apesar do apelido, seu nome é Leônidas Sodré de Castro, presidente responsável pela compra do terreno do estádio.",
     "Este estádio está a 200 metros do estádio do seu maior rival.",
@@ -345,8 +345,9 @@ const estadios = [
     imagem: "images/independencia_sat.jpg",
     dicas: ["Foi palco de uma das maiores zebras do futebol mundial, quando a seleção amadora dos Estados Unidos bateu a Inglaterra por 1 a 0.",
     "O estádio pertencia ao governo, mas passou a ser do Sete de setembro, que depois foi anexado a outro clube da mesma cidade.",
-    "Em 2013, foi peça fundamental para a conquista da primeira Libertadores de um clube brasileiro.",
+    "Em 2013, foi peça fundamental para a conquista da primeira Libertadores de um cluve brasileiro.",
     "Na sua reforma, em 2012, foi criticado pela imprensa e torcedores pela quantidade de pontos cegos nas arquibancadas.",
-    "Seu nome oficial homenageia um ex-presidente do Sete de Setembro, que ajudou a viabilizar e ampliar o estádio na época em que o clube era mandatário."]
+    "Seu nome oficial homenageia um ex-presidente do Sete de Setembro, que ajudou a viabilizar e ampliar o estádio na época em que o clube era mandatário."
+    ]
   }
 ];

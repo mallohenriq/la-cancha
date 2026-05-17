@@ -1,76 +1,104 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-17KXHVN0WM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-17KXHVN0WM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-  gtag('config', 'G-17KXHVN0WM');
-</script>
+    gtag('config', 'G-17KXHVN0WM');
+  </script>
+  
   <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>La Cancha</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  
+  <title>La Cancha!</title>
+  
+  <meta name="description" content="Cinco dicas, um estádio, todos os dias. © 2026 Google Earth. Todos os direitos reservados. ">
+  
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+  <link rel="stylesheet" href="style.css">  
+</head>  
+<body>    
 
-  <!-- CONTAINER PRINCIPAL -->
-  <div id="app">
+  <header class="topo-jogo">
+    <nav class="menu-jogos">
+      <a href="index.html" class="ativo">Clássico</a>
+      <a href="copa/index.html">Copa do Mundo</a>
+    </nav>
+    <div style="width: 40px;"></div> 
+  </header>
 
-    <h1>LA CANCHA!</h1>
-    <p>Você consegue adivinhar o estádio?</p>
-    <p>Um novo estádio é liberado todos os dias, à meia noite.</p>
-    <p id="contador" class="contador"></p>
+  <div id="app">  
+    <h1 class="logo">LA CANCHA!</h1>  
+    <p class="subtitulo">Você consegue acertar o estádio?</p>
+    <p id="contador" class="contador"></p>  
 
-    <div id="estadio">
-      <div id="imagem"></div>
-      <div class="credito-imagem" id="creditoImagem">
-        © Google Earth
+    <div id="estadio">  
+      <div id="imagem"></div>  
+    </div>  
+
+    <div class="entrada">  
+      <div class="input-wrapper">
+        <input id="resposta" placeholder="Qual é o estádio?" autocomplete="off">
+        <ul id="lista-sugestoes" class="sugestoes oculto"></ul>
       </div>
-    </div>
+      <button id="confirmar" onclick="verificar()">Confirmar</button>  
+    </div>  
 
-    <div class="entrada">
-      <input id="resposta" placeholder="Digite o nome do estádio">
-      <button onclick="verificar()">Confirmar</button>
-    </div>
+    <div id="progress-dots" class="progress-dots">  
+      <span class="dot">⚽</span>
+      <span class="dot">⚽</span>
+      <span class="dot">⚽</span>
+      <span class="dot">⚽</span>
+      <span class="dot">⚽</span>
+    </div>  
 
-    <!-- Tentativas -->
-    <div id="tentativas" class="tentativas">
-      <span class="bola"></span>
-      <span class="bola"></span>
-      <span class="bola"></span>
-      <span class="bola"></span>
-      <span class="bola"></span>
-    </div>
-
-    <!-- Dicas -->
     <div id="dicas"></div>
 
-  </div>
-  <!-- FIM DO APP -->
-
-  <!-- MODAL FINAL -->
-  <div id="resultado" class="resultado oculto">
-    <h2 id="mensagemFinal"></h2>
-    <p id="estatistica"></p>
-    <p id="contadorFinal" class="contador"></p>
-
-    <div class="share">
-      <a id="shareTwitter" target="_blank">Twitter</a>
-      <a id="shareWhats" target="_blank">WhatsApp</a>
+    <div class="ads-container main-ad">
+      <p>Publicidade</p>
     </div>
+  </div>  
 
-    <p class="link">
-      🔗 <a href="https://lacanchagame.com.br" target="_blank">Jogue em La Cancha</a>
-    </p>
-  </div>
+  <div id="resultado" class="resultado oculto">  
+    <div class="conteudo-modal">
+      <h2 id="mensagemFinal"></h2>  
+      <p id="estatistica"></p>  
 
-  <script src="estadios.js"></script>
-  <script src="script.js"></script>
+      <div class="resultado-estadio">
+        <img id="resultadoImagem" src="" alt="Estádio do dia">
+        <p id="resultadoNome"></p>
+      </div>
 
-</body>
+      <div class="ads-container modal-ad">
+        <p>Publicidade</p>
+      </div>
+
+      <p id="contadorFinal" class="contador"></p>  
+      
+      <div class="share">  
+        <a id="shareTwitter" class="btn-share btn-x" target="_blank">Twitter (X)</a>  
+        <a id="shareWhats" class="btn-share btn-whats" target="_blank">WhatsApp</a>  
+      </div>  
+
+      <p class="link">  
+        🔗 <a href="https://lacanchagame.com.br" target="_blank">lacanchagame.com.br</a>  
+      </p>
+
+      <footer class="rodape-modal">
+        <p>© 2026 Google Earth. Todos os direitos reservados.</p>
+      </footer>
+    </div>
+  </div>    
+
+  <footer class="rodape">
+    <p>© 2026 Google Earth. Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="estadios.js"></script>    
+  <script src="script.js"></script>  
+</body>  
 </html>
