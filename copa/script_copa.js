@@ -15,9 +15,8 @@ const dataDeJogo = dataUrl ? new Date(dataUrl + "T00:00:00") : hojeBrasil;
 let diaCompeticao = Math.floor((dataDeJogo - DATA_INICIO) / (1000 * 60 * 60 * 24)) + 1;
 // Se alguém tentar acessar antes da data, força o Dia 1
 if (diaCompeticao < 1) diaCompeticao = 1; 
-
 // ==========================================
-// LÓGICA DE SELEÇÃO DOS ESTÁDIOS
+// LÓGICA DE SELEÇÃO DOS ESTÁDIOS (CORRIGIDA)
 // ==========================================
 let indiceDoDia;
 const indicesReservados = [0, 60, 61, 62, 63]; 
@@ -29,14 +28,37 @@ else if (diaCompeticao === 22) indiceDoDia = 62; // San Siro
 else if (diaCompeticao === 26) indiceDoDia = 63; // Juventus Stadium
 else if (diaCompeticao === 64) indiceDoDia = 60; // MetLife Stadium (Final)
 else {
-    // Sorteio Diário
+    // 1. Pega todos os índices disponíveis (59 estádios para sorteio)
     const disponiveisParaSorteio = [];
     for (let i = 0; i < estadios.length; i++) {
         if (!indicesReservados.includes(i)) disponiveisParaSorteio.push(i);
     }
-    const semente = (dataDeJogo.getFullYear() * 10000) + ((dataDeJogo.getMonth() + 1) * 100) + dataDeJogo.getDate();
-    const sorteio = (Math.abs(semente * 1103515245 + 12345) % disponiveisParaSorteio.length);
-    indiceDoDia = disponiveisParaSorteio[sorteio];
+    
+    // 2. Função para embaralhar como um baralho (semente fixa garante a mesma ordem sempre)
+    function embaralharComSemente(array, semente) {
+        let m = array.length, t, i;
+        while (m) {
+            semente = (semente * 9301 + 49297) % 233280;
+            i = Math.floor((semente / 233280) * m--);
+            t = array[m];
+            array[m] = array[i];
+            array[i] = t;
+        }
+        return array;
+    }
+
+    // 3. Cria a ordem oficial do campeonato (embaralhada usando o ano 2026 como semente)
+    const ordemOficial = embaralharComSemente(disponiveisParaSorteio, 2026);
+
+    // 4. Descobre quantos "dias normais" (sem contar os fixos) já se passaram
+    let diasNormaisDecorridos = 0;
+    const diasFixos = [5, 18, 22, 26, 64];
+    for (let d = 1; d <= diaCompeticao; d++) {
+        if (!diasFixos.includes(d)) diasNormaisDecorridos++;
+    }
+
+    // 5. Pega o estádio exato da lista, garantindo que NUNCA vai repetir
+    indiceDoDia = ordemOficial[(diasNormaisDecorridos - 1) % ordemOficial.length];
 }
 
 const estadioAtual = estadios[indiceDoDia];
@@ -171,7 +193,7 @@ function finalizar(acertou, jaEstavaSalvo = false) {
     if ([18, 22, 26].includes(diaCompeticao)) paisHTML += " <span class='destaque-especial'>(Não está nesta edição)</span>";
     document.getElementById("info-pais").innerHTML = paisHTML;
 
-    const msg = acertou ? `🥳 Acertei o estádio da Copa (Dia ${diaCompeticao}) em ${tentativa} chutes! ⚽🔥` : `Desafio da Copa difícil hoje! Dia ${diaCompeticao} ⚽😢`;
+    const msg = acertou ? `Acertei o estádio da Copa (Dia ${diaCompeticao}) em ${tentativa} chutes!` : `Desafio da Copa difícil hoje! Dia ${diaCompeticao} `;
     const link = `\n\n🔗 Jogue: lacanchagame.com.br/copa`;
     document.getElementById("shareTwitter").href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(msg + link)}`;
     document.getElementById("shareWhats").href = `https://wa.me/?text=${encodeURIComponent(msg + link)}`;
